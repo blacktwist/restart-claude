@@ -104,6 +104,10 @@ npx skills remove restart -g   # or: rm -rf ~/.claude/skills/restart
 
 Then remove the `# Claude Code /restart support` lines from your `~/.zshrc` or `~/.bash_profile`.
 
+## License
+
+[MIT](LICENSE)
+
 ---
 
 Brought to you by [BlackTwist](https://blacktwist.app) — Monetize your Threads and Bluesky audience.
