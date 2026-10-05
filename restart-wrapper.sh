@@ -1,5 +1,5 @@
 # Wrapper that lets the /restart skill relaunch Claude Code in the same terminal.
-# Source this from ~/.zshrc (install.sh does it for you).
+# Works in zsh and bash. Source it from your shell rc file (install.sh does it for you).
 
 claude() {
   local marker args=("$@") id rc a drop_val prev_flag
@@ -11,7 +11,7 @@ claude() {
     CLAUDE_RESTART_MARKER="$marker" command claude "${args[@]}"
     rc=$?
 
-    id=$(<"$marker" 2>/dev/null)
+    id=$(cat "$marker" 2>/dev/null)
     if [[ -z "$id" ]]; then
       rm -f "$marker"
       return $rc

@@ -19,15 +19,15 @@ To pick up the update you have to:
 ## How it works
 
 - **`/restart` skill** runs a small script that saves the current session ID and tells Claude Code to quit. If Claude Code ignores the request, the script force-quits it a few seconds later.
-- **zsh wrapper** (`restart.zsh`) defines a `claude` shell function. When Claude Code exits because of `/restart`, the function relaunches it with `claude --resume <session-id>`. Launch flags such as `--model` or `--dangerously-skip-permissions` are kept. Any earlier `--resume`/`--continue` and the original prompt are dropped.
+- **Shell wrapper** (`restart-wrapper.sh`, for zsh and bash) defines a `claude` shell function. When Claude Code exits because of `/restart`, the function relaunches it with `claude --resume <session-id>`. Launch flags such as `--model` or `--dangerously-skip-permissions` are kept. Any earlier `--resume`/`--continue` and the original prompt are dropped.
 - **Fallback:** where the wrapper isn't loaded (for example, an app that starts Claude Code itself), `/restart` still closes the session and copies `claude --resume <session-id>` to your clipboard, so you only need to paste it.
 
 ## Install
 
-Requires macOS and zsh. There are two parts:
+Requires macOS and zsh or bash. There are two parts:
 
 - **The skill** adds the `/restart` command to Claude Code.
-- **The zsh wrapper** relaunches Claude Code after it closes.
+- **The shell wrapper** relaunches Claude Code after it closes.
 
 Install both for the full experience. With only the skill, `/restart` closes the session and copies the resume command to your clipboard.
 
@@ -42,9 +42,11 @@ cd restart-claude
 `install.sh` does two things:
 
 1. Links the skill into `~/.claude/skills/restart`.
-2. Adds a line to your `~/.zshrc` that loads `restart.zsh`.
+2. Adds a line that loads `restart-wrapper.sh` to your shell's startup file: `~/.zshrc` for zsh, or `~/.bash_profile` for bash on macOS.
 
-Then open a new terminal (or run `source ~/.zshrc`) and start `claude`.
+It detects your shell from `$SHELL`. To choose one yourself, run `./install.sh zsh` or `./install.sh bash`.
+
+Then open a new terminal (or `source` that file) and start `claude`.
 
 ### Install the skill in Claude Code manually
 
@@ -66,15 +68,15 @@ cp -R restart-claude/restart ~/.claude/skills/restart
 
 To use the skill in a single project only, put the folder in that project's `.claude/skills/restart` instead.
 
-Next, load the wrapper by adding this line to your `~/.zshrc`. Adjust the path to wherever you cloned the repo:
+Next, load the wrapper by adding this line to your shell's startup file: `~/.zshrc` for zsh, or `~/.bash_profile` for bash on macOS. Adjust the path to wherever you cloned the repo:
 
 ```bash
-source ~/restart-claude/restart.zsh
+source ~/restart-claude/restart-wrapper.sh
 ```
 
 ### Check that it works
 
-1. Open a new terminal and run `type claude`. It should say `claude` is a shell function from `restart.zsh`.
+1. Open a new terminal and run `type claude`. It should say `claude` is a shell function (in bash, it prints the function's code instead).
 2. Start `claude`, type `/`, and look for `restart` in the command list. If it isn't there, start a fresh Claude Code session.
 
 ## Usage
@@ -93,7 +95,7 @@ Only you can trigger the skill. Claude won't run it on its own.
 rm ~/.claude/skills/restart
 ```
 
-Then remove the `# Claude Code /restart support` lines from your `~/.zshrc`.
+Then remove the `# Claude Code /restart support` lines from your `~/.zshrc` or `~/.bash_profile`.
 
 ---
 
