@@ -45,6 +45,7 @@ else
   printf '%s' "${resume_cmd}" | pbcopy 2>/dev/null || true
   say "↻ Closing Claude Code. Resume command copied to clipboard: ${resume_cmd}"
   echo "Closing. Resume with: ${resume_cmd} (copied to clipboard)"
+  echo "Tip: for automatic relaunch, run in your shell: bash $(cd "$(dirname "$0")" && pwd)/setup-wrapper.sh"
 fi
 
 # Detach so this tool call returns before claude goes down.

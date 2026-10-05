@@ -11,4 +11,4 @@ Run exactly this command and nothing else:
 bash ${CLAUDE_SKILL_DIR}/scripts/restart.sh
 ```
 
-Then reply with only the script's output line, verbatim. Do not do anything else afterwards — this session is about to exit.
+Then reply with only the script's output, verbatim. Do not do anything else afterwards — this session is about to exit.
