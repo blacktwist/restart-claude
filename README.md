@@ -2,6 +2,8 @@
 
 One command to restart your Claude Code session and land back in the same conversation.
 
+![Demo: /restart closes Claude Code and resumes the same conversation, which still remembers what was said before](assets/demo.gif)
+
 ## Why
 
 Every so often your Claude Code terminal shows:
